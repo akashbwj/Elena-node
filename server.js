@@ -8,6 +8,11 @@ const express=require("express"),
     passportLocalMongoose=require('passport-local-mongoose'),
 	dbUrl=process.env.DB_URL||"mongodb://localhost:27017/gnss_india";
 
+//Requiring routes
+const indexRoutes =require("./routes/index");
+
+
+const User=require('./models/user');
 //Database connection
 mongoose.connect(dbUrl,{
     useNewUrlParser:true,
@@ -33,13 +38,12 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// passport.use(new LocalStrategy(User.authenticate()));
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-app.get("/",(req,res)=>{
-    res.render("home")
-})
+app.use("/", indexRoutes);
+
 
 app.listen(process.env.PORT||3000,process.env.IP,function(){
 	console.log("Server Has Started Listening!!!")
