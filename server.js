@@ -37,9 +37,10 @@ app.use(passport.session());
 // passport.serializeUser(User.serializeUser());
 // passport.deserializeUser(User.deserializeUser());
 
-app.get("/",(req,res)=>{
-    res.render("home")
-})
+
+const indexRoutes = require('./routes/index')
+
+app.use("/", indexRoutes);
 
 app.listen(process.env.PORT||3000,process.env.IP,function(){
 	console.log("Server Has Started Listening!!!")

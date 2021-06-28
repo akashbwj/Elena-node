@@ -1,0 +1,22 @@
+<%-include ("./partials/header")%>
+
+<div class="home-text">
+    <h1>Login</h1>
+</div>
+
+<div class="register-form">
+    <form method="POST">
+        <div class="form-group">
+            <input class="form-control" type="text" name="username" placeholder="Username">
+        </div>
+
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password">
+        </div>
+        <input class="register-button" type="submit" value="Login">
+    </form>
+
+    Don't have an account? <a href="/register">Register here.</a>
+</div>
+
+<%-include ("./partials/footer")%>
