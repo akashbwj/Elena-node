@@ -41,21 +41,28 @@ router.post("/login", (req, res) => {
                         done(null, user);
                       });
                     req.login(user.email, function (err) {
-                        if (err) throw err;
+                        if (err){
+                            req.flash("error",err.message);
+                            return res.redirect('/login');
+                        }
+                        req.flash("success","Logged in successfully!");
                         return res.redirect("/");
                     })
                 }
                 else if (err) {
-                    console.log(err);
+                    req.flash("error",err.message);
+                    return res.redirect('/login');
                 }
                 else {
-                    return res.status(400).send("Invalid Password!");
+                    req.flash("error","Invalid password! Please try again.");
+                    return res.redirect('/login');
                 }
             })
         }
 
         else {
-            return res.status(400).send("Username Does not Exist!");
+            req.flash("error","There is no user account with this email. Kindly register on our site first.");
+            return res.redirect('/login');
         }
     })();
 })
@@ -66,7 +73,8 @@ router.post("/register", (req, res) => {
     // validate the request body according to schema.
     const { error } = validateData(req.body);
     if (error) {
-        return res.status(400).send(error.details[0].message);
+        req.flash("error",error.details[0].message);
+        return res.redirect('/register');
     }
 
     // check if email id already exists.
@@ -80,11 +88,13 @@ router.post("/register", (req, res) => {
     })()
     .then(result => {
         if (!result) {
-            return res.status(400).send("Email ID exists!");
+            req.flash("error","Email id already exists. Kindly login.");
+            return res.redirect('/register');
         }
 
         if (req.body.password !== req.body.confirm_password) {
-            return res.status(400).send("Password do not match!");
+            req.flash("error","Passwords do not match!");
+            return res.redirect('/register');
         }
     
         const user = User.build({
@@ -101,7 +111,7 @@ router.post("/register", (req, res) => {
         bcrypt.hash(req.body.password, saltRounds, async function(err, hash) {
             user.password = hash;
             await user.save();
-            console.log("hash:", hash);
+            // console.log("hash:", hash);
             
         });
 
@@ -118,6 +128,7 @@ router.post("/register", (req, res) => {
 
 router.get("/logout", (req, res) => {
     req.logout();
+    req.flash("success","Logged out successfully!");
     return res.redirect("/");
 })
 

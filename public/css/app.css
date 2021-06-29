@@ -316,3 +316,20 @@ button svg{
 .login-div .form-container{
 	margin: 100px auto 80px;
 }
+
+.error-alert,.success-alert{
+	padding: 10px;
+	display:flex;
+	justify-content: center;
+	align-items:center;
+}
+.error-alert{
+	background-color: #f2dede;
+	border: 1px solid #ebccd1;
+	color:#a94442;
+}
+.success-alert{
+	background-color: #dff0d8;
+    border: 1px solid #d6e9c6;
+	color: #3c763d;
+}

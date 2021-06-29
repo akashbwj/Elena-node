@@ -19,8 +19,12 @@
         <div class="heading-top">
             <h1 style="font-family: 'Marmelad', sans-serif;">GNSS INFORMATION CENTER</h1>
             <div class="heading-links" style="color: #a6cbdd;">
+                <% if(!currentUser){ %>
                 <a href="/login">LOGIN</a> <span class="hide-me"> | </span>
                 <a href="/register">REGISTER</a>
+                <% } else { %>
+                  <a href="/logout">LOGOUT</a>
+                  <% } %>
             </div>
         </div>
         <div style="color: #a6cbdd;" class="heading-bottom">
@@ -111,6 +115,20 @@
           </div> 
 
         <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()"><i class="fa fa-bars"></i></a>
+      </div>
+
+
+      <div class="flash-msg-container">
+        <% if(error && error.length>0) { %>
+          <div class="error-alert" role="alert">
+            <%=error%>
+          </div>	
+        <% } %>
+        <% if(success && success.length>0) { %>
+          <div class="success-alert" role="alert">
+            <%=success%>
+          </div>	
+        <% } %> 
       </div>
 
       <div class="content">

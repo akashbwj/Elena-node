@@ -5,7 +5,7 @@ const joi = require('joi');
 const { Sequelize, DataTypes } = require('sequelize');
 
 
-const sequelize = new Sequelize('elena', 'root', 'password123', {
+const sequelize = new Sequelize('elena', 'root', 'password', {
     host: 'localhost',
     dialect: 'mysql'
   });

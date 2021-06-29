@@ -10,13 +10,14 @@ const express=require("express"),
     passportLocalMongoose=require('passport-local-mongoose'),
 	dbUrl=process.env.DB_URL||"mongodb://localhost:27017/gnss_india";
 
+    const flash=require("connect-flash");
 
 // Database Connection
 
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'password123',
+    password: 'password',
 });
 
 connection.connect((err) => {
@@ -31,16 +32,6 @@ connection.connect((err) => {
         console.log("Connected to DB elena!");
     });
 })
-
-//Database connection
-// mongoose.connect(dbUrl,{
-//     useNewUrlParser:true,
-//     useUnifiedTopology:true,
-//     useFindAndModify:false,
-//     useCreateIndex:true
-// })
-// .then(()=>console.log("connected to DB!"))
-// .catch(error=>console.log(error.message));
 
 app.use(bodyParser.urlencoded({extended:true}));
 
@@ -57,12 +48,15 @@ app.use(require("express-session")({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+app.use(flash());
 
-app.use("/", indexRoutes);
 
+app.use(function(req,res,next){
+	res.locals.currentUser=req.user;
+	res.locals.error=req.flash("error");
+	res.locals.success=req.flash("success");
+	next();
+})
 
 const indexRoutes = require('./routes/index')
 
