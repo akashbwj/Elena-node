@@ -8,38 +8,58 @@ const saltRounds = 10;
 
 // Routes
 
-
 router.get("/", (req, res) => {
     res.render("home");
 })
+
 
 router.get("/register", (req, res) => {
     res.render("register");
 })
 
+
 router.get("/login", (req, res) => {
     res.render("login")
 })
 
+
 router.post("/login", (req, res) => {
-    let user = User.findOne({username: req.body.username });
-    if (user) {
-        bcrypt.compare(req.body.password, user.password, function(err, result) {
-            if (result) {
-                passport.authenticate('local', {
-                    successRedirect: "/",
-                    failureRedirect: "login"
-                })
-            }
-            else {
-                return res.status(400).send("Invalid Password!");
-            }
-        })
-    }
-    else {
-        return res.status(400).send("Username Does not Exist!");
-    }
+    
+    // Check if username exists in DB
+    (async function checkUserExists() {
+        let user = await User.findOne({where: {email: req.body.email }});
+       
+        if (user) {
+            
+            // Check if the password is correct.
+            bcrypt.compare(req.body.password, user.password, function(err, result) {
+                if (result) {
+                    passport.serializeUser(function(user, done) {
+                        done(null, user);
+                      });
+                      passport.deserializeUser(function(user, done) {
+                        done(null, user);
+                      });
+                    req.login(user.email, function (err) {
+                        if (err) throw err;
+                        return res.redirect("/");
+                    })
+                }
+                else if (err) {
+                    console.log(err);
+                }
+                else {
+                    return res.status(400).send("Invalid Password!");
+                }
+            })
+        }
+
+        else {
+            return res.status(400).send("Username Does not Exist!");
+        }
+    })();
 })
+
 
 router.post("/register", (req, res) => {
 
@@ -49,45 +69,56 @@ router.post("/register", (req, res) => {
         return res.status(400).send(error.details[0].message);
     }
 
-    // check if username already exists.
-    let username = User.findOne({username: req.body.username });
-    console.log(username)
-    if (username) {
-        return res.status(400).send("Username already exists!");
-    }
-
     // check if email id already exists.
-    let email = User.findOne({email: req.body.emailId });
-    if (email) {
-        return res.status(400).send("Email ID already exists!");
-    }
 
-    if (req.body.password !== req.body.confirm_password) {
-        return res.status(400).send("Password do not match!");
-    }
+    (async function isEmailUnique() {
+        let email = await User.findOne({where: {email: req.body.email}});
+        if (email === null) {
+            return true;
+        }
+        return false;
+    })()
+    .then(result => {
+        if (!result) {
+            return res.status(400).send("Email ID exists!");
+        }
 
-    bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
-        var hashed_password = hash;
-    });
+        if (req.body.password !== req.body.confirm_password) {
+            return res.status(400).send("Password do not match!");
+        }
+    
+        const user = User.build({
+            email: req.body.email,
+            firstName: req.body.first_name,
+            lastName: req.body.last_name,
+            password: "dump", 
+            isAdmin: false, 
+            resetPasswordToken: null,
+            resetPasswordExpires: null
+        })
+    
+        // hash the password before storing in DB.
+        bcrypt.hash(req.body.password, saltRounds, async function(err, hash) {
+            user.password = hash;
+            await user.save();
+            console.log("hash:", hash);
+            
+        });
 
-    console.log(hashed_password);
-
-    user = new User({
-        email: req.body.emailId,
-        username: req.body.username,
-        password: hashed_password, 
-        isAdmin: false,
-        firstName: req.body.first_name,
-        lastName: req.body.last_name,
-    });
-
-    user.save();
-    passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/login'
+        // login user.
+        passport.authenticate('local', {
+            successRedirect: '/',
+            failureRedirect: '/login'
+        })
+    
+        res.redirect("/");
     })
 
-    res.redirect("/");
+})
+
+router.get("/logout", (req, res) => {
+    req.logout();
+    return res.redirect("/");
 })
 
 module.exports = router;
