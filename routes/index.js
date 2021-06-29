@@ -116,9 +116,19 @@ router.post("/register", (req, res) => {
         });
 
         // login user.
-        passport.authenticate('local', {
-            successRedirect: '/',
-            failureRedirect: '/login'
+        passport.serializeUser(function(user, done) {
+            done(null, user);
+          });
+          passport.deserializeUser(function(user, done) {
+            done(null, user);
+          });
+        req.login(user.email, function (err) {
+            if (err){
+                req.flash("error",err.message);
+                return res.redirect('/login');
+            }
+            req.flash("success","Registered and logged in successfully!");
+            return res.redirect("/");
         })
     
         res.redirect("/");
