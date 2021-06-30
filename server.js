@@ -40,6 +40,10 @@ app.use(passport.session());
 app.get("/",(req,res)=>{
     res.render("home")
 })
+app.get('/gps_home',(req,res)=>{
+    res.render('gps/gps_home')
+
+})
 
 app.listen(process.env.PORT||3000,process.env.IP,function(){
 	console.log("Server Has Started Listening!!!")
