@@ -131,7 +131,7 @@ router.post("/register", (req, res) => {
             return res.redirect("/");
         })
     
-        res.redirect("/");
+        
     })
 
 })
@@ -140,6 +140,10 @@ router.get("/logout", (req, res) => {
     req.logout();
     req.flash("success","Logged out successfully!");
     return res.redirect("/");
+})
+router.get('/gps_home',(req,res)=>{
+    return res.render('gps_home')
+
 })
 
 module.exports = router;

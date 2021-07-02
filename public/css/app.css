@@ -154,9 +154,57 @@
 	  background-image: linear-gradient(#daf7f7, #84c0f5);
 	  color:#0d3059;
   }
+  .container .overview-section{
+	width: 100%;
+	margin: 3% auto;
+	padding: 20px 0;
+  }
+  .container .overview-section .card{
+	display : flex;
+	flex-direction: column ; 
+	
+	
+	width: 94%;
+	padding-left: 50%;
+	margin: 0 auto;
+	text-align: center;
+	background: #fff;
+	
+	border-radius: 10px;
+	padding: 15px;
+	padding-bottom: 20px;
+  }
+  .container .overview-section .card h2{
+	padding: 10px 0;
+	text-align: center;
+  }
+  .container .overview-section .card p{
+	padding: 10px;
+	text-align: left;
+  }
   .home-text h1{
 	  margin: 8px;
   }
+.dropdown-sidebar{
+	
+	display: flex;
+    flex-direction: column;
+    background-color: #e7ebf4;
+    width: 320px;
+	min-height: calc(100vh - 192px);
+    justify-content: center;
+    position: absolute;
+    align-items: center;
+}
+.dropdown-sidebar a{
+	float: none;
+	color: #2876ad;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: left;
+
+}
   footer a{
 	  text-decoration: none;
 	  color: #fff;
