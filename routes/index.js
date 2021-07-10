@@ -145,6 +145,31 @@ router.get('/gps_home',(req,res)=>{
     return res.render('gps_home')
 
 })
+router.get('/navicHome',(req,res)=>{
+    return res.render('navicHome')
+
+})
+router.get('/glonass',(req,res)=>{
+    return res.render('glonass')
+
+})
+router.get('/galileo',(req,res)=>{
+    return res.render('galileo')
+
+})
+router.get('/beidou',(req,res)=>{
+    return res.render('beidou')
+
+})
+router.get('/qzss',(req,res)=>{
+    return res.render('qzss')
+
+})
+router.get('/sbas',(req,res)=>{
+    return res.render('sbas')
+
+})
+
 
 module.exports = router;
 

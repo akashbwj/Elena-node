@@ -18,6 +18,50 @@
 	color:#a6cbdd;
 	font-weight:400;
 }
+.h4{
+	margin:40px;
+}
+.gps-home-text{
+
+	text-align: center;
+	padding: 25px 50px 75px 275px;
+	font-size: 40px;	
+	min-height: calc(100vh - 192px);
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.right-sidebar{
+	position: absolute;
+	left :0;
+	width :250px ;
+	height:inherit;
+	background-image: linear-gradient(white, #bdd8f0);
+	z-index: -1;
+
+
+}
+.right-sidebar header{
+	font-size: 22px;
+	color :white;
+	text-align :center;
+	line-height: 70px;
+	background-color: #bdd8f0;
+	user-select: none;
+}
+
+.right-sidebar ul a {
+	display: block;
+	height :100%;
+	width : 100%;
+	line-height: 65px;
+	font-size :20px;
+	color :#476072 ;
+	padding-left : 40px;
+	box-sizing: border-box;
+	border-top : 1x solid #bdd8f0;
+
+}
 
 
 
@@ -127,6 +171,17 @@
 	  text-align: left;
 	}
   }
+  .search{
+	float: right;
+	padding: auto;
+	margin-bottom: 6px;
+	
+	margin-top: 6px;
+	margin-right: 80px;
+	
+	border: 2px solid white;
+	font-size: 17px;
+  }
 
   .content{
 	display: grid;
@@ -135,7 +190,7 @@
   }
   .news-sidebar{
 	background-image: linear-gradient(white, #bdd8f0);
-	min-height: calc(100vh - 192px);
+	height: inherit;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -187,14 +242,16 @@
   }
 .dropdown-sidebar{
 	
-	display: flex;
-    flex-direction: column;
-    background-color: #e7ebf4;
-    width: 320px;
-	min-height: calc(100vh - 192px);
-    justify-content: center;
-    position: absolute;
-    align-items: center;
+	position: absolute;
+	left :0;
+	width :250px ;
+	display : flex;
+	flex-direction: column;
+	align-items:center;
+	justify-content:center;
+	height:inherit;
+	background-image: linear-gradient(white, #bdd8f0);
+	
 }
 .dropdown-sidebar a{
 	float: none;
