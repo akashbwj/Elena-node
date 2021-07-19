@@ -13,27 +13,27 @@ const express=require("express"),
     const flash=require("connect-flash");
 
 // Database Connection
-const dbUsername = process.env.dbUsername;
-const dbPassword = process.env.dbPassword;
+// const dbUsername = process.env.dbUsername;
+// const dbPassword = process.env.dbPassword;
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: dbUsername,
-    password: dbPassword,
-});
+// const connection = mysql.createConnection({
+//     host: 'localhost',
+//     user: dbUsername,
+//     password: dbPassword,
+// });
 
-connection.connect((err) => {
-    if (err) throw err;
-    console.log("DataBase Connected");
-    connection.query("CREATE DATABASE IF NOT EXISTS elena-db", function(err, result) {
-        if (err) throw err;
-        console.log("Database elena Created");
-    });
-    connection.query("USE elena-db", function(err, result) {
-        if (err) throw err;
-        console.log("Connected to DB elena!");
-    });
-})
+// connection.connect((err) => {
+//     if (err) throw err;
+//     console.log("DataBase Connected");
+//     connection.query("CREATE DATABASE IF NOT EXISTS elena-db", function(err, result) {
+//         if (err) throw err;
+//         console.log("Database elena Created");
+//     });
+//     connection.query("USE elena-db", function(err, result) {
+//         if (err) throw err;
+//         console.log("Connected to DB elena!");
+//     });
+// })
 
 app.use(bodyParser.urlencoded({extended:true}));
 
