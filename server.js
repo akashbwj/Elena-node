@@ -25,11 +25,11 @@ const connection = mysql.createConnection({
 connection.connect((err) => {
     if (err) throw err;
     console.log("DataBase Connected");
-    connection.query("CREATE DATABASE IF NOT EXISTS elena", function(err, result) {
+    connection.query("CREATE DATABASE IF NOT EXISTS elena-db", function(err, result) {
         if (err) throw err;
         console.log("Database elena Created");
     });
-    connection.query("USE elena", function(err, result) {
+    connection.query("USE elena-db", function(err, result) {
         if (err) throw err;
         console.log("Connected to DB elena!");
     });

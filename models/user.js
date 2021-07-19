@@ -7,7 +7,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 const dbUsername = process.env.dbUsername;
 const dbPassword = process.env.dbPassword;
 
-const sequelize = new Sequelize('elena', dbUsername, dbPassword, {
+const sequelize = new Sequelize('elena-db', dbUsername, dbPassword, {
     host: 'localhost',
     dialect: 'mysql'
   });
