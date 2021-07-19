@@ -13,11 +13,13 @@ const express=require("express"),
     const flash=require("connect-flash");
 
 // Database Connection
+const dbUsername = process.env.dbUsername;
+const dbPassword = process.env.dbPassword;
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'password',
+    user: dbUsername,
+    password: dbPassword,
 });
 
 connection.connect((err) => {

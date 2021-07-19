@@ -4,8 +4,10 @@ const joi = require('joi');
 
 const { Sequelize, DataTypes } = require('sequelize');
 
+const dbUsername = process.env.dbUsername;
+const dbPassword = process.env.dbPassword;
 
-const sequelize = new Sequelize('elena', 'root', 'password', {
+const sequelize = new Sequelize('elena', dbUsername, dbPassword, {
     host: 'localhost',
     dialect: 'mysql'
   });
