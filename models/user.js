@@ -1,13 +1,10 @@
 
-const mongoose = require('mongoose');
 const joi = require('joi');
-
 const { Sequelize, DataTypes } = require('sequelize');
 
-const dbUsername = process.env.dbUsername;
-const dbPassword = process.env.dbPassword;
 
-const sequelize = new Sequelize('elena', dbUsername, dbPassword, {
+const sequelize = new Sequelize(
+    process.env.dbName, process.env.dbUsername, process.env.dbPassword, {
     host: 'localhost',
     dialect: 'mysql'
   });
@@ -49,6 +46,7 @@ const User = sequelize.define('User', {
         type: DataTypes.DATE
     }
 });
+
 
 (async function syncTable() {
     await User.sync();

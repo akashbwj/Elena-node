@@ -3,36 +3,22 @@ require('dotenv').config()
 const express=require("express"),
     app=express(),
 	bodyParser=require("body-parser"),
-    // mongoose=require("mongoose"),
     mysql = require('mysql'),
 	passport=require('passport');
-	// LocalStrategy=require('passport-local'),
-    // passportLocalMongoose=require('passport-local-mongoose'),
-	// dbUrl=process.env.DB_URL||"mongodb://localhost:27017/gnss_india";
 
     const flash=require("connect-flash");
 
 // Database Connection
-const dbUsername = process.env.dbUsername;
-const dbPassword = process.env.dbPassword;
 
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: dbUsername,
-    password: dbPassword,
+    host: process.env.dbHost,
+    user: process.env.dbUsername,
+    password: process.env.dbPassword,
+    database: process.env.dbName
 });
 
 connection.connect((err) => {
     if (err) throw err;
-    console.log("DataBase Connected");
-    connection.query("CREATE DATABASE IF NOT EXISTS elena", function(err, result) {
-        if (err) throw err;
-        console.log("Database elena Created");
-    });
-    connection.query("USE elena", function(err, result) {
-        if (err) throw err;
-        console.log("Connected to DB elena!");
-    });
 })
 
 app.use(bodyParser.urlencoded({extended:true}));
@@ -41,6 +27,7 @@ app.set("view engine","ejs");
 app.use(express.static(__dirname+"/public"))
 
 const secret=process.env.SECRET;
+
 //PASSPORT CONFIGURATION
 app.use(require("express-session")({
     secret:secret,
